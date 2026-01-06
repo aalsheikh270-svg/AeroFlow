@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AeroStride Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; margin:0; padding:0; font-family: Arial, sans-serif; }
+
+body { background:#f4f4f4; color:#111; }
+
+header {
+  background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+              url("https://img-volc.jianpian.info/super/super/overseas/poster/1000/1767662038750_1000_HbUBL.png~tplv-flrovnc8r8-s3-cC-q:0:0:0:0:q75.webp");
+  background-size: cover;
+  background-position: center;
+  color:white;
+  padding:150px 40px;
+  text-align:center;
+}
+header h1 { font-size:48px; margin-bottom:10px; }
+header p { font-size:18px; max-width:700px; margin:auto; }
+
+.products {
+  max-width:1200px;
+  margin:50px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(320px,1fr));
+  gap:40px;
+  padding:0 20px;
+}
+
+.product {
+  background:white;
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.product img {
+  width:100%;
+  border-radius:12px;
+  transition:opacity .3s;
+  margin-bottom:15px;
+}
+
+.product h2 { font-size:24px; margin-bottom:10px; }
+.product p { margin-bottom:10px; }
+.price { font-size:20px; font-weight:bold; margin-bottom:15px; }
+
+.colors { display:flex; gap:10px; margin-bottom:15px; }
+.color {
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  border:2px solid #ccc;
+  cursor:pointer;
+}
+
+.size-system select {
+  width:100%;
+  padding:6px;
+  margin-bottom:10px;
+}
+
+.sizes {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.size {
+  padding:6px 12px;
+  border:1px solid #ccc;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.size:hover,
+.size.active {
+  background:black;
+  color:white;
+}
+
+button {
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:25px;
+  background:black;
+  color:white;
+  cursor:pointer;
+}
+button:hover { background:#222; }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>SkyDrive</h1>
+  <p>Rise Above the Game</p>
+</header>
+
+<section class="products">
+
+<!-- PRODUCT 1 -->
+<div class="product">
+  <img id="shoe1" src="purple.png">
+  <h2>SkyDrive basic</h2>
+  <p>A high-top athletic shoe built for stability and control. It features a snug, supportive collar, secure and innovated lace-and-strap system, reinforced midsole cushioning, and a durable outsole designed for strong grip and confident movement.</p>
+  <div class="price">$70</div>
+
+  <div class="colors">
+    <div class="color" style="background:purple" onclick="changeImage('shoe1','purple')"></div>
+    <div class="color" style="background:white" onclick="changeImage('shoe1','white')"></div>
+    <div class="color" style="background:blue" onclick="changeImage('shoe1','blue')"></div>
+  </div>
+
+  <div class="size-system">
+    <select onchange="changeSizes(this.value,'sizes1')">
+      <option value="US">US</option>
+      <option value="UK">UK</option>
+      <option value="EU">EU</option>
+    </select>
+  </div>
+
+  <div class="sizes" id="sizes1"></div>
+  <button>Add to Cart</button>
+</div>
+
+<!-- PRODUCT 2 -->
+<div class="product">
+  <img id="shoe2" src="pro-red.png">
+  <h2>SkyDrive Pro</h2>
+  <p>A modern athletic sneaker with a chunky cushioned sole, reinforced overlays, secure and innovated lace system, and supportive midfoot structure designed for performance and stability.
+</p>
+  <div class="price">$110</div>
+
+  <div class="colors">
+    <div class="color" style="background:orange" onclick="changeImage('shoe2','orange')"></div>
+    <div class="color" style="background:green" onclick="changeImage('shoe2','green')"></div>
+    <div class="color" style="background:red" onclick="changeImage('shoe2','red')"></div>
+  </div>
+
+  <div class="size-system">
+    <select onchange="changeSizes(this.value,'sizes2')">
+      <option value="US">US</option>
+      <option value="UK">UK</option>
+      <option value="EU">EU</option>
+    </select>
+  </div>
+
+  <div class="sizes" id="sizes2"></div>
+  <button>Add to Cart</button>
+</div>
+
+</section>
+
+<script>
+const sizeData = {
+  US: [7,8,9,10,11,12],
+  UK: [6,7,8,9,10,11],
+  EU: [40,41,42,43,44,45]
+};
+
+const images = {
+  shoe1: {
+    purple: "purple.png",
+    white: "white.png",
+    blue: "blue.png"
+  },
+  shoe2: {
+    red: "pro-red.png",
+    orange: "pro-orange.png",
+    green: "pro-green.png"
+  }
+};
+
+function changeImage(id, color) {
+  const img = document.getElementById(id);
+  img.style.opacity = 0;
+  setTimeout(() => {
+    img.src = images[id][color];
+    img.style.opacity = 1;
+  }, 100);
+}
+
+function changeSizes(system, targetId) {
+  const container = document.getElementById(targetId);
+  container.innerHTML = "";
+
+  sizeData[system].forEach(size => {
+    const div = document.createElement("div");
+    div.className = "size";
+    div.textContent = size;
+    div.onclick = () => {
+      [...container.children].forEach(s => s.classList.remove("active"));
+      div.classList.add("active");
+    };
+    container.appendChild(div);
+  });
+}
+
+/* Load default sizes */
+changeSizes("US", "sizes1");
+changeSizes("US", "sizes2");
+</script>
+
+</body>
+</html>
